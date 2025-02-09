@@ -1,7 +1,7 @@
 {% if service_list %}
     <ul>
     {% for service in service_list %}
-        <li><a href="/services/{{ service.id }}/">{{ service.name_text }}</a>
+        <li><a href="{% url 'service:detail' service.id %}">{{ service.name_text }}</a>
              is  {% if service.enabled_toggle %}active{% else %}disabled{% endif %}</li>
     {% endfor %}
     </ul>
