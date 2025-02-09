@@ -20,7 +20,3 @@ def detail(request, service_id):
 def polls(request, service_id):
     response = "You're looking at the polls of service %s."
     return render(response % service_id)
-
-
-def vote(request, service_id):
-    return render("You're voting on question %s." % service_id)
