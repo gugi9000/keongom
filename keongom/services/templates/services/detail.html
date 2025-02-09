@@ -1,0 +1,23 @@
+<h1>{{ service.name_text }}</h1>
+<h2>{{ service.description_text}}</h2>
+<h3>Site is {% if service.enabled_toggle %}active{% else %}passive{% endif %}.</h3>
+<h3>TLS monitoring is {% if service.tls_toggle %}en{% else %}dis{% endif %}abled</h3>
+{% if service.poll_set.all %}
+<h2>Latest polls</h2>
+<pre>
+</pre>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+{% for poll in service.poll_set.all %}
+    <tr>
+        <td>{{ poll.poll_date }}</td>
+        <td>{{ poll.status_code }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<h2>Never polled</h2>
+{% endif %}
