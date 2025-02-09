@@ -1,3 +1,5 @@
+{% extends 'services/layout.html' %}
+{% block content %}
 <h1>{{ service.name_text }}</h1>
 <h2>{{ service.description_text}}</h2>
 <h3>Site is {% if service.enabled_toggle %}active{% else %}passive{% endif %}.</h3>
@@ -21,3 +23,4 @@
 {% else %}
 <h2>Never polled</h2>
 {% endif %}
+{% endblock %}

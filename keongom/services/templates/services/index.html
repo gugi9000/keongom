@@ -1,3 +1,5 @@
+{% extends 'services/layout.html' %}
+{% block content %}
 {% if service_list %}
     <ul>
     {% for service in service_list %}
@@ -8,3 +10,4 @@
 {% else %}
     <p>No services are available.</p>
 {% endif %}
+{% endblock %}
