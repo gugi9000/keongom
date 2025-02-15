@@ -4,7 +4,7 @@ from .models import Service
 
 
 def index(request):
-    service_list = Service.objects.order_by("name_text")[:5]
+    service_list = Service.objects.filter(poll__isnull=False).distinct().order_by("name_text")
     context = {
         "service_list": service_list,
     }
@@ -14,7 +14,7 @@ def index(request):
 def detail(request, service_id):
     service = get_object_or_404(Service, pk=service_id)
     polls = service.poll_set.order_by("-poll_date")[:5]
-    return render(request, "services/detail.html", {"service": service, "poll:": polls})
+    return render(request, "services/detail.html", {"service": service, "pols:": polls})
 
 
 def polls(request, service_id):

@@ -1,13 +1,24 @@
 {% extends 'services/layout.html' %}
 {% block content %}
+<h2>Services</h2>
 {% if service_list %}
-    <ul>
+    <ul class="list-group">
     {% for service in service_list %}
-        <li><a href="{% url 'service:detail' service.id %}">{{ service.name_text }}</a>
-             is  {% if service.enabled_toggle %}active{% else %}disabled{% endif %}</li>
+        {% if service.enabled_toggle %}
+        <li class="list-group-item {% if service.poll_set.first.status_code == 200 %}list-group-item-success{% else %}list-group-item-danger{% endif %}">
+            <a href="{% url 'service:detail' service.id %}">{{ service.name_text }}</a> {% if service.poll_set.first.status_code == 200 %}online{% else %}offline{% endif %} as of {{ service.poll_set.last.poll_date }}
+        </li>
+        {% else %}
+        <li class="list-group-item list-group-item-secondary">
+            <a href="{% url 'service:detail' service.id %}">{{ service.name_text }}</a>
+            is disabled and was last polled {{ service.poll_set.last.poll_date }}
+        </li>
+        {% endif %}
     {% endfor %}
     </ul>
 {% else %}
     <p>No services are available.</p>
 {% endif %}
+<hr/>
+<p>Manage services in the admin backend.</p>
 {% endblock %}

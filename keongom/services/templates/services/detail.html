@@ -1,22 +1,45 @@
 {% extends 'services/layout.html' %}
 {% block content %}
-<h1>{{ service.name_text }}</h1>
-<h2>{{ service.description_text}}</h2>
-<h3>Site is {% if service.enabled_toggle %}active{% else %}passive{% endif %}.</h3>
-<h3>TLS monitoring is {% if service.tls_toggle %}en{% else %}dis{% endif %}abled</h3>
-{% if service.poll_set.all %}
-<h2>Latest polls</h2>
-<pre>
-</pre>
-<table>
+<p>&lt;- <a href="/">back to services</a></p>
+<h2>Service details</h2>
+<table class="table 
+{% if service.enabled_toggle %}
+    {% if service.poll_set.last.status_code == 200 %}table-success
+    {% else %}table-danger
+    {% endif %}
+{% else %}table-secondary
+{% endif %}
+ table-striped">
     <tr>
-        <th>Date</th>
-        <th>Status</th>
+        <th>Service</th>
+        <td>{{ service.name_text }}</td>
     </tr>
+    <tr>
+        <td colspan="2">{{ service.description_text }}</td>
+    </tr>
+    <tr>
+        <th>Monitoring</th>
+        <td>{% if service.enabled_toggle %}enabled{% else %}disabled{% endif %}</td>
+    </tr>
+    <tr>
+        <th>TLS monitoring</th>
+        <td>{% if service.tls_toggle %}en{% else %}dis{% endif %}abled</td>
+    </tr>
+</table>
+{% if service.poll_set.all %}
+<hr/>
+<p><b>Latest polls</b></p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
 {% for poll in service.poll_set.all %}
     <tr>
         <td>{{ poll.poll_date }}</td>
-        <td>{{ poll.status_code }}</td>
+        <td {% if poll.status_code == 200 %}class="table-success"{% else %}class="table-danger"{% endif %}>{{ poll.status_code }}</td>
     </tr>
 {% endfor %}
 </table>
