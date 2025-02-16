@@ -29,7 +29,7 @@
         <td>{% if service.tls_toggle %}en{% else %}dis{% endif %}abled</td>
     </tr>
 </table>
-{% if service.poll_set.all %}
+{% if service.poll_set %}
 <hr/>
 <p><b>Latest polls</b></p>
 <table class="table table-hover">

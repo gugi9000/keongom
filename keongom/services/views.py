@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render, get_object_or_404
 from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 
 from .models import Service
 
@@ -17,8 +17,8 @@ def index(request):
 
 def detail(request, service_id):
     service = get_object_or_404(Service, pk=service_id)
-    polls = service.poll_set.order_by("-poll_date")[:5]
-    return render(request, "services/detail.html", {"service": service, "pols:": polls})
+    # polls = service.poll_set.order_by("poll_date")[:5]  ## TODO: Why `5`?
+    return render(request, "services/detail.html", {"service": service})
 
 
 def polls(request, service_id):

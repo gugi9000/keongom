@@ -25,5 +25,9 @@ class Poll(models.Model):
     
     def was_polled_recently(self):
         return self.poll_date >= timezone.now() - datetime.timedelta(days=14)
+    
+    class Meta:
+        get_latest_by = "poll_date"
+        ordering = ["-poll_date"]
 
 ## TODO - Add a model for certificates information
