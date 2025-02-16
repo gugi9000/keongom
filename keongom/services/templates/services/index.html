@@ -8,16 +8,19 @@
     <ul class="list-group">
     {% for service in service_list %}
         {% if service.enabled_toggle %}
-        <li class="list-group-item d-flex justify-content-between align-items-start
-        {% if service.poll_set.first.status_code == 200 %}list-group-item-success
-        {% elif service.poll_set.first.status_code == 0 %}list-group-item-danger
-        {% else %}list-group-item-warning{% endif %}">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold"><a href="{% url 'service:detail' service.id %}">{{ service.name_text }}</a></div>
-              {% if service.poll_set.first.status_code == 200 %}online{% else %}offline{% endif %} as of {{ service.poll_set.last.poll_date }}
-              </div>
-              <span class="badge text-bg-primary rounded-pill">{{ service.poll_set.first.status_code }}</span>
-        </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start
+            {% if service.poll_set.first.status_code == 200 %}list-group-item-success
+                {% elif service.poll_set.first.status_code == 0 %}list-group-item-danger
+            {% else %}list-group-item-warning{% endif %}">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="{% url 'service:detail' service.id %}">{{ service.name_text }}</a></div>
+                {% if service.poll_set.first.status_code == 200 %}online
+                    {% elif service.poll_set.first.status_code == 0 %}offline
+                    {% else %}status code {{ service.poll_set.first.status_code }}
+                {% endif %} as of {{ service.poll_set.last.poll_date }}
+                </div>
+                <span class="badge text-bg-primary rounded-pill">{{ service.poll_set.first.status_code }}</span>
+            </li>
         {% else %}
         <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-secondary">
             <div class="ms-2 me-auto">
