@@ -11,11 +11,12 @@ class Command(BaseCommand):
 
 
 def check_services():
+    headers = {'user-agent': 'keongom/0.0.1'}
     services = Service.objects.all()
     for service in services:
         if service.enabled_toggle:
             try:
-                response = requests.get(service.url_text, timeout=5)
+                response = requests.get(service.url_text, timeout=5, headers=headers)
                 status_code = response.status_code
             except requests.exceptions.RequestException as e:
                 status_code = 0
