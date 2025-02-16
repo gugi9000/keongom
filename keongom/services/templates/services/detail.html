@@ -18,6 +18,9 @@
         <td colspan="2">{{ service.description_text }}</td>
     </tr>
     <tr>
+        <td colspan="2"><a href="{{ service.url_text }}">{{ service.url_text }}</a></td>
+    </tr>
+    <tr>
         <th>Monitoring</th>
         <td>{% if service.enabled_toggle %}enabled{% else %}disabled{% endif %}</td>
     </tr>
